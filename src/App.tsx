@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Moon, Sun, Info, Trophy } from 'lucide-react';
 import { Quiz } from './components/Quiz';
 import { HallOfFame } from './components/HallOfFame';
+
 import uud from './data/uud.json';
 
 const Footer = () => {
@@ -28,7 +29,6 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [showHall, setShowHall] = useState(false);
-  const [hallData, setHallData] = useState<any[]>([]);
 
   const closeModal = () => {
     setIsClosing(true);
@@ -38,40 +38,19 @@ function App() {
     }, 300);
   };
 
-  const HallOfFameModal = () => (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div
-        className={`rounded-2xl shadow-xl p-6 max-w-md w-full relative transform transition-all duration-300 max-h-[80vh] overflow-y-auto bg-white/80 text-gray-800 backdrop-blur-md border border-gray-200 ${isClosing ? 'scale-90 opacity-0' : 'scale-100 opacity-100'}`}
-      >
-        <button
-          onClick={() => {
-            setIsClosing(true);
-            setTimeout(() => {
-              setShowHall(false);
-              setIsClosing(false);
-            }, 200);
-          }}
-          className="absolute top-2 right-2 text-xl font-bold text-gray-700 hover:text-red-500"
-        >
-          &times;
-        </button>
-        <h2 className="text-xl font-semibold mb-4">🏆 Hall of Fame</h2>
-        <ul className="space-y-2 text-sm">
-          {hallData.map((entry, idx) => (
-            <li key={idx} className="flex justify-between border-b pb-1">
-              <span>{idx + 1}. {entry.name}</span>
-              <span>{entry.score}/{entry.total} - {entry.time}s</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-
   return (
     <div className={`min-h-screen transition-colors duration-300 flex flex-col items-center ${
       isDark ? 'bg-gradient-to-br from-gray-800 to-teal-900' : 'bg-gradient-to-br from-gray-100 to-teal-100'
     }`}>
+
+      {/* Tombol Hall of Fame */}
+      <button
+        onClick={() => setShowHall(true)}
+        className="fixed bottom-16 left-4 p-2 rounded-full bg-white/10 backdrop-blur-lg hover:bg-white/20 transition-all duration-300"
+        aria-label="Hall of Fame"
+      >
+        <Trophy className="w-6 h-6 text-yellow-300" />
+      </button>
 
       {/* Tombol Ganti Tema */}
       <button
@@ -85,6 +64,7 @@ function App() {
           <Moon className="w-6 h-6 text-gray-800" />
         )}
       </button>
+
       {/* Tombol Modal */}
       <button
         onClick={() => setShowModal(true)}
@@ -94,7 +74,7 @@ function App() {
         MATERI UUD
       </button>
 
-      {/* Modal */}
+      {/* Modal Materi UUD */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
           <div
@@ -136,6 +116,9 @@ function App() {
         </div>
       )}
 
+      {/* Modal Hall of Fame */}
+      {showHall && <HallOfFame isOpen={showHall} onClose={() => setShowHall(false)} />}
+
       {/* Konten Utama */}
       <div className="container max-w-4xl mx-auto px-4 py-8">
         <div className="text-center mb-12">
@@ -151,7 +134,6 @@ function App() {
           </p>
         </div>
         <Quiz />
-        <HallOfFame />
       </div>
 
       <Footer />
