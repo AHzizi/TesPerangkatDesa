@@ -35,7 +35,7 @@ export function UserForm({ onSubmit }: UserFormProps) {
         </div>
         <div>
           <label htmlFor="lastName" className="block text-sm font-medium text-white mb-2">
-            Nama Belakang (Opsional)
+            Nama Belakang
           </label>
           <input
             type="text"
@@ -44,6 +44,7 @@ export function UserForm({ onSubmit }: UserFormProps) {
             onChange={(e) => setLastName(e.target.value)}
             className="w-full px-4 py-3 rounded-lg bg-gray-700/40 border border-gray-600/40 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all duration-300"
             placeholder="Masukkan nama belakang"
+            required
           />
         </div>
         <button
